@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Logo creator</title>
+</head>
+<body class="bg-gray-200">
+<div class="container mx-auto py-8">
+    <h1 class="text-3xl mb-8">Icon Generator</h1>
+    <div class="grid grid-cols-[500px_minmax(900px,_1fr)] gap-8">
+        <div>
+            <form action="none" id="settingsForm">
+                <div class="bg-white rounded-3xl px-8 py-8">
+                    <h2 class="text-xl mb-4">Settings</h2>
+                    <div class="mb-4">
+                        <label class="block mb-2 text-sm font-medium text-gray-900" for="uploader">Select your base
+                            image</label>
+                        <input class="lock w-full text-sm text-slate-500
+      file:mr-4 file:py-2 file:px-4
+      file:rounded-full file:border-0
+      file:text-sm file:font-semibold
+      file:bg-violet-50 file:text-violet-700
+      hover:file:bg-violet-100" aria-describedby="file_input_help" id="uploader" type="file">
+                        <p class="mt-1 text-sm text-gray-500" id="file_input_help">SVG, PNG or JPG</p>
+                    </div>
+                    <div class="mb-4">
+                        <label for="projectKey" class="block mb-2 text-sm font-medium text-gray-900">Project Key</label>
+                        <input type="text" id="projectKey"
+                               class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                               placeholder="Key"/>
+                    </div>
+                    <div class="mb-4">
+                        <label for="framework" class="block mb-2 text-sm font-medium text-gray-900">Framework</label>
+                        <select type="" id="framework"
+                                class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                            <option value="terraform">Terraform</option>
+                            <option value="kube">Kubernetes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit"
+                                class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            Generate
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div>
+            <div class="bg-white rounded-3xl px-8 py-8">
+                <h2 class="text-xl mb-4">Preview</h2>
+                <canvas width="512" height="512" class="border-2 border-black" id="canvas"></canvas>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
