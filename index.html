@@ -6,12 +6,12 @@
     <title>Logo creator</title>
 </head>
 <body class="bg-gray-200">
-<div class="container mx-auto py-8">
-    <h1 class="text-3xl mb-8">Icon Generator</h1>
-    <div class="grid grid-cols-[500px_minmax(900px,_1fr)] gap-8">
+<div class="container mx-auto py-8 py-4">
+    <h1 class="text-3xl mb-8 px-8 md:px-0">Icon Generator</h1>
+    <div class="grid grid-cols-1 md:grid-cols-[500px_minmax(550px,_1fr)] gap-8">
         <div>
             <form action="#" id="settingsForm">
-                <div class="bg-white rounded-3xl px-8 py-8">
+                <div class="bg-white md:rounded-3xl px-8 py-8">
                     <h2 class="text-xl mb-4">Settings</h2>
                     <div class="mb-4">
                         <label class="block mb-2 text-sm font-medium text-gray-900" for="uploader">Select your base
@@ -48,9 +48,9 @@
             </form>
         </div>
         <div>
-            <div class="bg-white rounded-3xl px-8 py-8">
+            <div class="bg-white md:rounded-3xl px-8 py-8 relative">
                 <h2 class="text-xl mb-4">Preview</h2>
-                <canvas width="512" height="512" class="border-2 border-black" id="canvas"></canvas>
+                <canvas class="border-2 border-black max-w-[512px] w-full aspect-square" width="512" height="512" id="canvas"></canvas>
             </div>
 
         </div>
