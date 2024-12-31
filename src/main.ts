@@ -5,6 +5,7 @@ import {subtle} from "uncrypto";
 const imageUploader = <HTMLInputElement>document.getElementById('uploader');
 const settingsForm = <HTMLInputElement>document.getElementById('settingsForm');
 const projectKey = <HTMLInputElement>document.getElementById('projectKey');
+const framework = <HTMLInputElement>document.getElementById('framework');
 const canvas = <HTMLCanvasElement>document.getElementById('canvas');
 const ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
 
@@ -14,6 +15,7 @@ interface preparedRenderingOptions {
         [key: string]: HTMLImageElement
         lightning: HTMLImageElement
         terraform: HTMLImageElement
+        kubernetes: HTMLImageElement
     }
     projectColor: string
 }
@@ -46,8 +48,9 @@ async function prepareRendering(baseImage: string): Promise<preparedRenderingOpt
     return {
         baseImage: await loadBlobToImageObject(await loadSvgToImage(baseImage)),
         icons: {
-            terraform: await loadBlobToImageObject(await loadSvgToImage('/overlay/terraform.svg')),
             lightning: await loadBlobToImageObject(await loadSvgToImage('/overlay/lightning.png')),
+            terraform: await loadBlobToImageObject(await loadSvgToImage('/overlay/terraform.svg')),
+            kubernetes: await loadBlobToImageObject(await loadSvgToImage('/overlay/kubernetes.svg')),
         },
         projectColor: await stringToColor(projectKey.value)
     }
@@ -69,25 +72,33 @@ function drawBase() {
 }
 
 function drawOverlay(options: preparedRenderingOptions) {
-    let posX: number, posY: number, padding: number = 5;
+    let padding: number = 5;
     // ProjectColor
-    drawRightTopCorner(options);
+    const cardWidth = canvas.width * .33;
+    const cardHeight = canvas.height * .33;
+    drawRightTopCorner(options, cardWidth, cardHeight);
 
     // cards
-    ctx.roundRect(0, 0, 100 + padding, 100 + padding, [0, 0, 20, 0]);
-    posX = .55;
-    posY = .55;
-    ctx.roundRect(canvas.width * posX - padding, canvas.height * posY - padding, canvas.width * (1 - posX) + padding, canvas.height * (1 - posY) + padding, [20, 0, 0, 0]);
+    ctx.roundRect(0, 0, cardWidth + padding, cardHeight + padding, [0, 0, 20, 0]);
+    ctx.roundRect(canvas.width - cardWidth - padding, canvas.height - cardHeight - padding, cardWidth + padding, cardHeight + padding, [20, 0, 0, 0]);
     ctx.fillStyle = 'white';
     ctx.fill();
+    ctx.stroke();
 
     // Brand
-    ctx.drawImage(options.icons.lightning, 0, 0, 100, 100);
+    ctx.drawImage(options.icons.lightning, 0, 0, cardWidth, cardHeight);
 
     // Code Style
     /// Terraform
-    ctx.drawImage(options.icons.terraform, canvas.width * posX, canvas.height * posY, canvas.width * (1 - posX), canvas.height * (1 - posY));
-    //await drawBlobToCanvas(options.icons.terraform, canvas.width * posX, canvas.height * posY, canvas.width * (1 - posX), canvas.height * (1 - posY));
+    switch (framework.value) {
+        case 'terraform':
+            ctx.drawImage(options.icons.terraform, canvas.width - cardWidth, canvas.height - cardHeight, cardWidth, cardHeight);
+            break;
+        case 'kubernetes':
+            ctx.drawImage(options.icons.kubernetes, canvas.width - cardWidth, canvas.height - cardHeight, cardWidth, cardHeight);
+            break;
+    }
+
     /// Kubernetes
 
     // Platform
@@ -98,17 +109,16 @@ function drawOverlay(options: preparedRenderingOptions) {
 
 async function loadSvgToImage(path: string) {
     const file = await fetch(path);
-    const blob = await file.blob();
-    return blob
+    return  await file.blob();
 }
 
-function drawRightTopCorner(options: preparedRenderingOptions) {
+function drawRightTopCorner(options: preparedRenderingOptions, width: number, height: number) {
     const path = new Path2D();
-    path.moveTo(canvas.width * .8, 0);
+    path.moveTo(canvas.width - width, 0);
     path.lineTo(canvas.width, 0);
-    path.lineTo(canvas.width, canvas.height * .2);
+    path.lineTo(canvas.width, height);
 
-    ctx.stroke();
+    ctx.stroke(path);
 
     ctx.fillStyle = options.projectColor;
     console.log(options.projectColor)
