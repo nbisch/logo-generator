@@ -7,7 +7,7 @@ const settingsForm = <HTMLInputElement>document.getElementById('settingsForm');
 const projectKey = <HTMLInputElement>document.getElementById('projectKey');
 const framework = <HTMLInputElement>document.getElementById('framework');
 const canvas = <HTMLCanvasElement>document.getElementById('canvas');
-const ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
+const ctx = <CanvasRenderingContext2D>canvas.getContext('2d', {alpha: false});
 
 interface preparedRenderingOptions {
     baseImage: HTMLImageElement
@@ -67,6 +67,7 @@ function loadBlobToImageObject(blob: Blob): Promise<HTMLImageElement> {
 }
 
 function drawBase() {
+    ctx.translate(0.5, 0.5);
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
@@ -109,7 +110,7 @@ function drawOverlay(options: preparedRenderingOptions) {
 
 async function loadSvgToImage(path: string) {
     const file = await fetch(path);
-    return  await file.blob();
+    return await file.blob();
 }
 
 function drawRightTopCorner(options: preparedRenderingOptions, width: number, height: number) {
