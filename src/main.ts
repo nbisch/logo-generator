@@ -87,7 +87,7 @@ function drawOverlay(options: preparedRenderingOptions) {
     ctx.stroke();
 
     // Brand
-    ctx.drawImage(options.icons.lightning, 0, 0, cardWidth, cardHeight);
+    // ctx.drawImage(options.icons.lightning, 0, 0, cardWidth, cardHeight);
 
     // Code Style
     /// Terraform
