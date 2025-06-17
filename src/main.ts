@@ -80,7 +80,8 @@ function drawOverlay(options: preparedRenderingOptions) {
     drawRightTopCorner(options, cardWidth, cardHeight);
 
     // cards
-    ctx.roundRect(0, 0, cardWidth + padding, cardHeight + padding, [0, 0, 20, 0]);
+    // ctx.roundRect(0, 0, cardWidth + padding, cardHeight + padding, [0, 0, 20, 0]);
+    
     ctx.roundRect(canvas.width - cardWidth - padding, canvas.height - cardHeight - padding, cardWidth + padding, cardHeight + padding, [20, 0, 0, 0]);
     ctx.fillStyle = 'white';
     ctx.fill();
